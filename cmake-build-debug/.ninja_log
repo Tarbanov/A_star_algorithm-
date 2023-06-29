@@ -1,0 +1,11 @@
+# ninja log v5
+0	444	1688070465836459694	CMakeFiles/A_star_algorithm.dir/main.cpp.o	71833a69bc6c5ba6
+446	563	1688070465952460636	A_star_algorithm	9f0375be12034d2a
+1	231	1688070713862389596	CMakeFiles/A_star_algorithm.dir/main.cpp.o	71833a69bc6c5ba6
+231	295	1688070713926390076	A_star_algorithm	9f0375be12034d2a
+0	234	1688070877915594975	CMakeFiles/A_star_algorithm.dir/main.cpp.o	71833a69bc6c5ba6
+234	298	1688070877975595408	A_star_algorithm	9f0375be12034d2a
+1	241	1688070992148410742	CMakeFiles/A_star_algorithm.dir/main.cpp.o	71833a69bc6c5ba6
+241	310	1688070992216411223	A_star_algorithm	9f0375be12034d2a
+0	231	1688071016300581196	CMakeFiles/A_star_algorithm.dir/main.cpp.o	71833a69bc6c5ba6
+231	295	1688071016364581647	A_star_algorithm	9f0375be12034d2a
