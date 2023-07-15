@@ -5,6 +5,13 @@
 #include <cstring>
 using namespace std;
 
+struct Node{
+
+
+
+
+};
+
 int main() {
 
     string line;
@@ -12,10 +19,10 @@ int main() {
 
     //чтение файла-карты
 
-    ifstream map1("map1.txt");
-    if (map1.is_open())
+    ifstream map("map1.txt");
+    if (map.is_open())
     {
-        while(getline(map1, line)) {
+        while(getline(map, line)) {
             strcpy( arrMap, line.c_str() );
             int i=0;
             while(arrMap[i]){
@@ -30,7 +37,7 @@ int main() {
             }
             cout << endl;
         }
-        map1.close();
+        map.close();
     }
     else cout << "Unable to open map1";
 
