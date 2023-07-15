@@ -1,37 +1,39 @@
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+#include <cstring>
 using namespace std;
 
-int chooseNumber(int number){
-    int num;
-    cin >> num;
-}
-
-
 int main() {
-    cout<<"Selec an action: "<<endl<<endl;
-    cout<<"1)A* algorithm" << endl;
-    cout<<"2)Cancel"<<endl;
 
-    int num1;
-    cin>>num1;
-    while(num1<=0 || num1>2){
-        cout <<"Set the correct number"<<endl;
-        cin.clear();
-        cin>> num1;
+    string line;
+    char arrMap[200];
+
+    //чтение файла-карты
+
+    ifstream map1("map1.txt");
+    if (map1.is_open())
+    {
+        while(getline(map1, line)) {
+            strcpy( arrMap, line.c_str() );
+            int i=0;
+            while(arrMap[i]){
+                if(arrMap[i]=='1'){
+                    arrMap[i]='#';
+                }
+                if(arrMap[i]=='0'){
+                    arrMap[i]='.';
+                }
+                cout << arrMap[i];
+                i++;
+            }
+            cout << endl;
+        }
+        map1.close();
     }
+    else cout << "Unable to open map1";
 
-    if(num1 == 1){
-
-
-
-    }
-
-    if(num1==2){
-
-
-
-
-    }
 
 
 
