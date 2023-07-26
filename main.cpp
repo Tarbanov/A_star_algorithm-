@@ -41,6 +41,7 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
     int k=x_S;
     int l=y_S;
     while(l!=y_F || k!=x_F){
+        system("clear");
         for(int i=0;i<4;++i) {
             int newX = current.x + dx[i];
             int newY = current.y + dy[i];
