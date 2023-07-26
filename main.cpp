@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include<unistd.h>  
+
 using namespace std;
 
 struct Node{
@@ -62,7 +64,6 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
                 continue;
             }
 
-
             xhelper.push_back(newX);
             yhelper.push_back(newY);
             fhelper.push_back(newF);
@@ -108,8 +109,9 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
         index--;
 
 
+        unsigned int microsecond = 1000000;
+        usleep( 0.5* microsecond);//sleeps for  second
     }
-
 }
 
 
@@ -120,20 +122,84 @@ int main() {
     int x_finish=0;
     int y_finish=0;
 
+    int menu_num;
+    int menu_map;
+
     string line;
     vector<vector<char>> vecMap;
 
-    ifstream map("map2.txt");
-    while(getline(map,line)){
-        vector<char> row;
-        for(char &c : line){
-            if(c==' '){
-                continue;
-            }
-            row.push_back(c);
-        }
-        vecMap.push_back(row);
+    system("clear");
+    cout << "A* algorithm:" << endl;
+    cout << "1) Select a map" << endl;
+    cout << endl ;
+
+    cout << "Choose an action: ";
+    cin >> menu_num;
+
+    while(menu_num!=1){
+        cout << "There is no such number, please enter the correct number:";
+        cin.clear();
+        cin >> menu_num;
     }
+
+    system("clear");
+    cout << "Maps: " << endl;
+    cout << "1) Map1(size: 18*42)" << endl;
+    cout << "2) Map2(size: 25*30)" << endl;
+    cout << endl;
+
+    cout << "Choose a map: ";
+    cin >> menu_map;
+
+    while(menu_map!=1 && menu_map!=2 && menu_map!=3){
+        cout << "There is no such number, please enter the correct number:";
+        cin.clear();
+        cin >> menu_num;
+    }
+
+
+
+    if(menu_map==1){
+        ifstream map("map1.txt");
+        while(getline(map,line)){
+            vector<char> row;
+            for(char &c : line){
+                if(c==' '){
+                    continue;
+                }
+                row.push_back(c);
+            }
+            vecMap.push_back(row);
+        }
+    }
+    if(menu_map==2){
+        ifstream map("map2.txt");
+        while(getline(map,line)){
+            vector<char> row;
+            for(char &c : line){
+                if(c==' '){
+                    continue;
+                }
+                row.push_back(c);
+            }
+            vecMap.push_back(row);
+        }
+    }
+
+    if(menu_map==3){
+        ifstream map("map3.txt");
+        while(getline(map,line)){
+            vector<char> row;
+            for(char &c : line){
+                if(c==' '){
+                    continue;
+                }
+                row.push_back(c);
+            }
+            vecMap.push_back(row);
+        }
+    }
+
 
     int rows=0;
     int columns =0;
@@ -174,11 +240,6 @@ int main() {
         }
     }
 
-    cout << x_start << " " << y_start << endl;
-    cout << x_finish << " " << y_finish << endl;
-
-
     path(x_start,y_start,x_finish,y_finish,vecMap,rows,columns);
-
 
 }
