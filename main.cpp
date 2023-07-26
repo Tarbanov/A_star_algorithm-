@@ -40,26 +40,26 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
 
     int k=x_S;
     int l=y_S;
-    while(v[l][k]!='F'){
+    while(l!=y_F || k!=x_F){
         for(int i=0;i<4;++i) {
             int newX = current.x + dx[i];
             int newY = current.y + dy[i];
-            double newG = current.g + 1;
+            double newG = current.g + 0.6;
             double newF = heuristic(newX, newY, x_F, y_F) + newG;
 
-            if(newX>col || newY>row ||newX<=0 || newY<=0){
+            if(newX>=col || newY>=row || newX<0 || newY<0){
                 continue;
             }
 
+            if(v[newY][newX]=='@'){
+                continue;
+            }
             if(v[newY][newX]=='#'){
                 continue;
             }
-
-//            for(int j=0;j<index;j++){
-//                if(newX==xhelper[j]&&newY==yhelper[j]){
-//                    continue;
-//                }
-//            }
+            if(v[newY][newX]=='S'){
+                continue;
+            }
 
 
             xhelper.push_back(newX);
@@ -122,7 +122,7 @@ int main() {
     string line;
     vector<vector<char>> vecMap;
 
-    ifstream map("map1.txt");
+    ifstream map("map2.txt");
     while(getline(map,line)){
         vector<char> row;
         for(char &c : line){
