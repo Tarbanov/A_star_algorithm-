@@ -24,7 +24,6 @@ double heuristic(int x_S,int y_S,int x_F, int y_F){
 
 
 void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int col){
-
     vector<int> dx = {1,-1,0,0};
     vector<int> dy = {0,0,1,-1};
     Node current(x_S,y_S,0, heuristic(x_S,y_S,x_F,y_F),heuristic(x_S,y_S,x_F,y_F));
@@ -32,46 +31,82 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
     vector<int> xhelper;
     vector<int> yhelper;
     vector<double> fhelper;
+    vector<double> ghelper;
+    vector<int> visited;
+    int visited_num=0;
     int index =0;
+    int num;
+    double num_help;
 
     int k=x_S;
     int l=y_S;
     while(v[l][k]!='F'){
-         for(int i=0;i<4;++i) {
-             int newX = current.x + dx[i];
-             int newY = current.y + dy[i];
-             int newG = current.g + 0.1;
-             double newF = heuristic(newX, newY, x_F, y_F) + newG;
+        for(int i=0;i<4;++i) {
+            int newX = current.x + dx[i];
+            int newY = current.y + dy[i];
+            double newG = current.g + 1;
+            double newF = heuristic(newX, newY, x_F, y_F) + newG;
+
+            if(newX>col || newY>row ||newX<=0 || newY<=0){
+                continue;
+            }
+
+            if(v[newY][newX]=='#'){
+                continue;
+            }
+
+//            for(int j=0;j<index;j++){
+//                if(newX==xhelper[j]&&newY==yhelper[j]){
+//                    continue;
+//                }
+//            }
 
 
-             if(v[newY][newX]=='#'){
-                 continue;
-             }
+            xhelper.push_back(newX);
+            yhelper.push_back(newY);
+            fhelper.push_back(newF);
+            ghelper.push_back(newG);
+            index++;
+        }
+
+        num_help=999999999;
+        for(int i =0;i<index;i++){
+            if(fhelper[i]<=num_help){
+                num=i;
+                num_help=fhelper[i];
+            }
+        }
 
 
 
+        visited.push_back(num);
+        visited_num++;
 
-             if (newF<current.f+current.g) {
+        current.f=fhelper[num];
+        current.g=ghelper[num];
+
+        v[yhelper[num]][xhelper[num]] = '@';
+        for (int n = 0; n < row; n++) {
+            for (int m = 0; m < col; m++) {
+                cout << v[n][m] << " ";
+            }
+            cout << endl;
+        }
 
 
 
-                 current.f=newF;
-                 current.g=newG;
+        k=xhelper[num];
+        l=yhelper[num];
+        current.x=xhelper[num];
+        current.y=yhelper[num];
 
-                 for(int n =0;n<row;n++){
-                     for(int m=0;m<col;m++){
-                         v[newY][newX]='@';
-                         cout << v[n][m] << " ";
-                     }
-                     cout << endl;
-                 }
+        fhelper.erase(fhelper.begin()+num);
+        xhelper.erase(xhelper.begin()+num);
+        yhelper.erase(yhelper.begin()+num);
+        ghelper.erase(ghelper.begin()+num);
+        index--;
 
-                 k=newX;
-                 l=newY;
-                 current.y=newY;
-                 current.x=newX;
-             }
-         }
+
     }
 
 }
