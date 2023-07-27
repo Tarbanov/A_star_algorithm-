@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <cmath>
-#include<unistd.h>  
+#include<unistd.h>
 
 using namespace std;
 
@@ -20,14 +20,14 @@ struct Node{
 
 //h
 double heuristic(int x_S,int y_S,int x_F, int y_F){
-    double h=sqrt(((x_F-x_S)*(x_F-x_S))+((y_F-y_S)*(y_F-y_S)));
+    double h=sqrt(((x_F-x_S)*(x_F-x_S))+((y_F-y_S)*(y_F-y_S)));//c=sqrt(x^2+b^2)
     return h;
 }
 
 
 void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int col){
-    vector<int> dx = {1,-1,0,0};
-    vector<int> dy = {0,0,1,-1};
+    vector<int> dx = {1,-1,0,0};//Sides on which the path can go
+    vector<int> dy = {0,0,1,-1};//Sides on which the path can go
     Node current(x_S,y_S,0, heuristic(x_S,y_S,x_F,y_F),heuristic(x_S,y_S,x_F,y_F));
 
     vector<int> xhelper;
@@ -35,7 +35,6 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
     vector<double> fhelper;
     vector<double> ghelper;
     vector<int> visited;
-    int visited_num=0;
     int index =0;
     int num;
     double num_help;
@@ -44,16 +43,18 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
     int l=y_S;
     while(l!=y_F || k!=x_F){
         system("clear");
+
         for(int i=0;i<4;++i) {
             int newX = current.x + dx[i];
             int newY = current.y + dy[i];
-            double newG = current.g + 0.6;
+            double newG = current.g + 0.5;//the cost of 1 move = 0.5
             double newF = heuristic(newX, newY, x_F, y_F) + newG;
 
+            //I make sure that I don't go beyond the boundaries
             if(newX>=col || newY>=row || newX<0 || newY<0){
                 continue;
             }
-
+            //If a possible move == @ or # or s => skip it
             if(v[newY][newX]=='@'){
                 continue;
             }
@@ -63,7 +64,7 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
             if(v[newY][newX]=='S'){
                 continue;
             }
-
+            //writing possible move to vector
             xhelper.push_back(newX);
             yhelper.push_back(newY);
             fhelper.push_back(newF);
@@ -71,6 +72,7 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
             index++;
         }
 
+        //Finding the lowest f
         num_help=999999999;
         for(int i =0;i<index;i++){
             if(fhelper[i]<=num_help){
@@ -80,13 +82,10 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
         }
 
 
-
-        visited.push_back(num);
-        visited_num++;
-
         current.f=fhelper[num];
         current.g=ghelper[num];
 
+        //writing a new move
         v[yhelper[num]][xhelper[num]] = '@';
         for (int n = 0; n < row; n++) {
             for (int m = 0; m < col; m++) {
@@ -109,8 +108,8 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
         index--;
 
 
-        unsigned int microsecond = 1000000;
-        usleep( 0.5* microsecond);//sleeps for  second
+        unsigned int microsecond = 500000;
+        usleep(  microsecond);//sleeps for 0.5 second
     }
 }
 
@@ -129,6 +128,8 @@ int main() {
     vector<vector<char>> vecMap;
 
     system("clear");
+
+    //menu
     cout << "A* algorithm:" << endl;
     cout << "1) Select a map" << endl;
     cout << endl ;
@@ -139,6 +140,7 @@ int main() {
     while(menu_num!=1){
         cout << "There is no such number, please enter the correct number:";
         cin.clear();
+        cin.ignore(256, '\n');
         cin >> menu_num;
     }
 
@@ -146,6 +148,7 @@ int main() {
     cout << "Maps: " << endl;
     cout << "1) Map1(size: 18*42)" << endl;
     cout << "2) Map2(size: 25*30)" << endl;
+    cout << "3) Map3(size: 39*74)" << endl;
     cout << endl;
 
     cout << "Choose a map: ";
@@ -154,11 +157,13 @@ int main() {
     while(menu_map!=1 && menu_map!=2 && menu_map!=3){
         cout << "There is no such number, please enter the correct number:";
         cin.clear();
-        cin >> menu_num;
+        cin.ignore(256, '\n');
+        cin >> menu_map;
     }
 
 
 
+    //reading .txt and writing up to 2D vector
     if(menu_map==1){
         ifstream map("map1.txt");
         while(getline(map,line)){
@@ -200,7 +205,7 @@ int main() {
         }
     }
 
-
+//Replacing numbers with signs 1==# , 0==.
     int rows=0;
     int columns =0;
     for(vector<char> &row : vecMap){
@@ -218,7 +223,7 @@ int main() {
         rows++;
         cout << endl;
     }
-
+   //find Start coordinates
     for(int i=0;i<rows;i++){
         for(int j=0;j<columns;j++){
             if(vecMap[i][j]=='S'){
@@ -229,7 +234,7 @@ int main() {
         }
     }
 
-
+    //find Finish coordinates
     for(int i=0;i<rows;i++){
         for(int j=0;j<columns;j++){
             if(vecMap[i][j]=='F'){
