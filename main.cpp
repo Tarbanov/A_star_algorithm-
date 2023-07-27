@@ -100,7 +100,8 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
         l=yhelper[num];
         current.x=xhelper[num];
         current.y=yhelper[num];
-
+        
+        //I delete those places where I have already been
         fhelper.erase(fhelper.begin()+num);
         xhelper.erase(xhelper.begin()+num);
         yhelper.erase(yhelper.begin()+num);

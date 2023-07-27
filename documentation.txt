@@ -1,0 +1,14 @@
+A* algorithm 
+I find way through the maze using A*, and using the UI so that you can see how the process is going.
+
+1)struct Node: 
+	Used to save сoordinates(x,y),the cost from the start(g), how much is left to the finish (h), f (f=h+g)
+	
+2)function heuristic:
+	We find how far we are from the finish line.I use Pythagorean theorem(c=sqrt(x^2+b^2)).So we need current and finish сoordinates
+	
+3)function path:
+	Сreate 2 vectors(possible moves).Find possible moves, and if they are suitable, then I write them to the vector.Finding the smallest value of f, and to this place I'm plotting a route.I'm writing out a new way. Continue to do this until I find the finish.
+	
+4)main:
+	The user selects a card.Then the program reads the file and uses the selected card.Finds where the start and finish are.And calls the path function.
