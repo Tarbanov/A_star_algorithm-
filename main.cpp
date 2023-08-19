@@ -7,6 +7,25 @@
 
 using namespace std;
 
+int right_coordinates_x(int x_st, int col){
+    while (x_st<0 or x_st >=col){
+        cout << "set a number between 0 and " << col-1 << endl;
+        cin.clear();
+        cin >> x_st;
+    }
+    return x_st;
+}
+
+int right_coordinates_y(int y_st, int row){
+    while (y_st<0 or y_st >=row){
+        cout << "set a number between 0 and " << row-1 << endl;
+        cin.clear();
+        cin >> y_st;
+    }
+    return y_st;
+}
+
+
 struct Node{
     int x; //X coordinate
     int y; //Y coordinate
@@ -111,20 +130,14 @@ void path (int x_S, int y_S,int x_F, int y_F, vector<vector<char>>&v,int row,int
 
 
         unsigned int microsecond = 100000;
-        usleep(  0.5*microsecond);//sleeps for 0.5 second
+        usleep(  microsecond);//sleeps for 0.5 second
     }
 }
 
 
 
 int main() {
-    int x_start=0;
-    int y_start=0;
-    int x_finish=0;
-    int y_finish=0;
-
-    int menu_num;
-    int menu_map;
+    int x_start, y_start, x_finish, y_finish, menu_num, menu_map;
 
     string line;
     vector<vector<char>> vecMap;
@@ -164,49 +177,34 @@ int main() {
         cin >> menu_map;
     }
 
+    string menu_map_name;
 
+    switch (menu_map) {
+        case 1:
+            menu_map_name="map1.txt";
+            break;
+        case 2:
+            menu_map_name="map2.txt";
+            break;
+        case 3:
+            menu_map_name="map3.txt";
+            break;
+    }
 
     //reading .txt and writing up to 2D vector
-    if(menu_map==1){
-        ifstream map("map1.txt");
-        while(getline(map,line)){
-            vector<char> row;
-            for(char &c : line){
-                if(c==' '){
-                    continue;
-                }
-                row.push_back(c);
+    ifstream map(menu_map_name);
+    while(getline(map,line)){
+        vector<char> row;
+        for(char &c : line){
+            if(c==' '){
+                continue;
             }
-            vecMap.push_back(row);
+            row.push_back(c);
         }
-    }
-    if(menu_map==2){
-        ifstream map("map2.txt");
-        while(getline(map,line)){
-            vector<char> row;
-            for(char &c : line){
-                if(c==' '){
-                    continue;
-                }
-                row.push_back(c);
-            }
-            vecMap.push_back(row);
-        }
+        vecMap.push_back(row);
     }
 
-    if(menu_map==3){
-        ifstream map("map3.txt");
-        while(getline(map,line)){
-            vector<char> row;
-            for(char &c : line){
-                if(c==' '){
-                    continue;
-                }
-                row.push_back(c);
-            }
-            vecMap.push_back(row);
-        }
-    }
+
 
     if(menu_map==4){
         system("clear");
@@ -317,38 +315,21 @@ int main() {
         cout << "set start coordinates" << endl;
         cout << "x-axis: ";
         cin >> x_start;
-        while (x_start<0 or x_start >=columns){
-            cout << "set a number between 0 and " << columns-1 << endl;
-            cin.clear();
-            cin >> x_start;
-        }
+        x_start=right_coordinates_x(x_start,columns);
         cout << "y-axis: ";
         cin >> y_start;
-        while (y_start<0 or y_start >=rows){
-            cout << "set a number between 0 and " << rows-1 << endl;
-            cin.clear();
-            cin >> y_start;
-        }
+        y_start=right_coordinates_y(y_start,rows);
         cout << "set finish coordinates" << endl;
         cout << "x-axis: ";
         cin >> x_finish;
-        while (x_finish<0 or x_finish >=columns){
-            cout << "set a number between 0 and " << columns-1 << endl;
-            cin.clear();
-            cin >> x_finish;
-        }
+        x_finish=right_coordinates_x(x_finish,columns);
         cout << "y-axis: ";
         cin >> y_finish;
-        while (y_finish<0 or y_finish >=rows){
-            cout << "set a number between 0 and " << rows-1 << endl;
-            cin.clear();
-            cin >> y_finish;
-        }
+        y_finish=right_coordinates_y(y_finish,rows);
 
         vecMap[y_start][x_start]='S';
         vecMap[y_finish][x_finish]='F';
     }
-
 
 
     path(x_start,y_start,x_finish,y_finish,vecMap,rows,columns);
