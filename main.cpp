@@ -236,7 +236,6 @@ int main() {
                     if (name_own_map == l)
                         flag2 = false;
                 }
-
             }
         }
 
@@ -251,8 +250,6 @@ int main() {
             }
             vecMap.push_back(row);
         }
-
-
     }
 
 //Replacing numbers with signs 1==# , 0==.
@@ -350,10 +347,6 @@ int main() {
 
         vecMap[y_start][x_start]='S';
         vecMap[y_finish][x_finish]='F';
-
-
-
-
     }
 
 
